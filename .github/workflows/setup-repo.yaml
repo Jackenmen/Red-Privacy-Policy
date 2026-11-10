@@ -1,0 +1,45 @@
+name: Setup repo
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: >-
+      !github.event.repository.is_template
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup repository
+        env:
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+        run: |
+          rm README.md
+          export SITE_URL="https://${GITHUB_REPOSITORY_OWNER@L}.github.io/${REPOSITORY_NAME}/"
+          envsubst '$REPO_URL $SITE_URL' < .github/setup-repo-resources/README.md > README.md
+          rm -rf .github/setup-repo-resources
+          git add README.md .github/setup-repo-resources
+          git commit -m 'Initial repo setup'
+          git push
+
+      - name: Disable current workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          workflow_filename="${GITHUB_WORKFLOW_REF#*/*/.github/workflows/}"
+          workflow_filename="${workflow_filename%%@*}"
+          gh workflow disable "$workflow_filename"
