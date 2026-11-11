@@ -31,6 +31,12 @@ jobs:
         run: |
           rm README.md
 
+      - name: Set last updated time
+        run: |
+          LAST_UPDATED=$(TZ=UTC0 git show --no-patch --format=%cd --date=format:'%Y-%m-%d %H:%M:%S GMT')
+          export LAST_UPDATED
+          yq -i '.last_updated = strenv(LAST_UPDATED)' _config.yml
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

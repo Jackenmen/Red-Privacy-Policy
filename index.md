@@ -1,5 +1,7 @@
 # Privacy policy
 
+*Last updated: {{ site.last_updated }}*
+
 This document contains the privacy policy and agreement you accept when adding the bot mentioned below to a server, or use them as a member of a Server. This document does not supersede any of the terms laid out by Discord.
 
 The terms "bot" and "Red" refer to the Discord bot listed below.
