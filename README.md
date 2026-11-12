@@ -1,5 +1,10 @@
 # Red-Privacy-Policy
 
+> [!NOTE]
+> If you've just created a repository from a template,
+> wait about 20 seconds and then refresh the page to see the updated README
+> with further setup instructions.
+
 This is a repository template for hosting a privacy policy of your own instance of [Red](https://github.com/Cog-Creators/Red-DiscordBot).
 It contains a workflow for publishing the privacy policy along with any other Markdown or HTML files
 as a GitHub Pages website.
